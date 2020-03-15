@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ path("homepage") }}">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("card") }}">Cards list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("Addcard") }}">Add cards</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("category") }}">Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("myDeck") }}">Deck</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <button class="button"><a class="session-nav disabled" href="{{ path("app_login") }}">Login</a>
+                        </button>
+
+                    </li>
+                    <li class="nav-item">
+                        <button class="button"><a class="session-nav" href="{{ path("app_register") }}">Register</a>
+                        </button>
+                    </li>
+                {% endif %}
+                {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <button class="button"><a class="session-nav" href="{{ path("app_logout") }}">Log out</a>
+                        </button>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+    <div id="main">
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.nav-link').click(function (e) {
+                e.preventDefault();
+                //alert($(this).attr('href'))
+                //var link = $(this).attr('href');
+
+                $('.nav-link').each(function () {
+                    $(this).removeClass('active');
+                });
+
+                $(this).addClass('active');
+                $('#main').load($(this).attr('href'));
+            });
+
+            $('#main').on('submit', 'form', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: new FormData(this),
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        $('#main').load($('.active').attr('href'));
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

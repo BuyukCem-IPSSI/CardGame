@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-12 mt-2">
+        <h1>Contents of your deck</h1>
+        <div class="row">
+        </div>
+    </div>
+    <div class="col-12 mt-2">
+        <h1>Add in your deck</h1>
+        <div class="row">
+            {% for card in cardsList %}
+                <div class="card card-style" style="width: 14rem;">
+                    <img alt="picture"
+                         src="{{ asset('uploads/img/cards/') ~ card.imgFileName }} "
+                         class=" img-card">
+                    <div class="card-body">
+                        <h5 class="card-title deleteCard" id="choice" data-ids="{{ card.id }}">{{ card.name }}</h5>
+                        <div class="col-12 ml-3">
+                            <div class="row">
+                                <div id="cercle"><p>{{ card.attack }}</p></div>
+                                <div id="cercle"><p>{{ card.lifePoint }}</p></div>
+                                <div id="cercle"><p>{{ card.cost }}</p></div>
+                            </div>
+                        </div>
+                        <div class="mt-2 ml-1">
+                            <button href="{{ path('addToDeck', {'id': card.id}) }}"  id="addDeck" class="btn btn-success ml-2">Add in your Deck</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $('#choice').on('click', function () {
+            var idCard = $(this).attr('data-id');
+            var idDeck = '{{ Decks.id }}';
+            $.ajax({
+                type: "POST",
+                url: "{{ path('deck_add_card') }}",
+                data: {'idDeck': idDeck, 'idCard': idCard},
+                success: function (response) {
+                    $('#pageContent').load('{{ path('deck_manage', {'id': deck.id}) }}');
+                }
+            });
+        });
+        $(document).on('click', '.deleteCard', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('data-link'),
+                success: function (response) {
+                    $('#pageContent').load('{{ path('deck_manage', {'id': deck.id}) }}', null, () => {
+                        hideLoader();
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

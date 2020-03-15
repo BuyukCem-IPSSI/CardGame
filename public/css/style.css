@@ -1,0 +1,65 @@
+.session-nav{
+    display: block;
+    padding: .5rem 1rem;
+}
+
+.button {
+    background-color: #557F9E; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.button:first-child{
+    margin-right: 15px;
+}
+
+.button  a:hover{
+    text-decoration: none;
+}
+.button a {
+    color: white;
+}
+.card-body h5{
+    color: white;
+}
+
+.img-card{
+    width: auto;
+    height: 170px;
+    background-size: cover;
+    margin-top: 10px;
+    margin-left: 10px;margin-right: 10px;
+    border-radius: 4px;
+}
+
+
+.card-style{
+    background-color: #BDC7D0;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    border-radius: 12px;
+}
+
+#cercle {
+    position: relative !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #4E6880;
+    margin-right: 12px;
+    color: white;
+}
+ #cercle p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+     font-size: 12px;
+}
+ #addDeck{
+     border-radius: 69px
+ }

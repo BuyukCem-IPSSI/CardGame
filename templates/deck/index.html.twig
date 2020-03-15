@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}My deck{% endblock %}
+{% block body %}
+    <div class="box p-4 mt-3">
+        {{ form_start(form, {'action': path(app.request.attributes.get('_route')), 'method': 'POST' , 'encrypte': 'multipart/form-data' }) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Deck name</th>
+            <th scope="col">Settings</th>
+            <th scope="col">delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Decks in DeckList %}
+            <tr>
+                <td>{{ Decks.name }}  </td>
+                <td>
+                    <button type="button" id="manageDeck" class="btn btn-light">
+                        <a  class="nav-link  manageDeck"
+                            id="send"
+                            href="{{ path("manageDeck",{'id': Decks.id}) }}">Manage</a>
+                    </button>
+                </td>
+                <td>
+                    <a href="{{ path('deckDelete', {'id': Decks.id}) }}"  class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+

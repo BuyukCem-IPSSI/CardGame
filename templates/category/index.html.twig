@@ -1,0 +1,22 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}ADD Categorie{% endblock %}
+{% block body %}
+
+    <div class="box p-4 mt-3">
+        {{ form_start(form, {'action': path(app.request.attributes.get('_route')), 'method': 'POST' , 'encrypte': 'multipart/form-data' }) }}
+        {{ form_widget(form) }}
+        {{ form_end(form)}}
+    </div>
+    <div class="grid-3">
+        {% for category in categoryList %}
+            <tr>
+                <h5>{{ category.name }}</h5>
+                <td>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </div>
+{% endblock %}
+
